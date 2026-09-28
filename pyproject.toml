@@ -1,0 +1,104 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyspatialstats"
+version = "0.2.0"
+description = "A comprehensive Python package for spatial statistics and geographically weighted modeling"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "BSD-3-Clause" }
+authors = [
+    { name = "PySpatialStats Contributors" },
+]
+keywords = [
+    "spatial-statistics",
+    "spatial-weights",
+    "esda",
+    "moran",
+    "geographically-weighted-regression",
+    "gwr",
+    "mgwr",
+    "gis",
+    "spatial-analysis",
+    "machine-learning",
+    "point-pattern-analysis",
+    "spatial-regression",
+    "kriging",
+    "disease-mapping",
+    "spatial-sampling",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "geopandas>=0.14",
+    "scikit-learn>=1.3",
+    "shapely>=2.0",
+    "joblib>=1.3",
+]
+
+[project.optional-dependencies]
+deep = ["torch>=2.0"]
+boosting = ["xgboost>=2.0", "lightgbm>=4.0"]
+viz = ["matplotlib>=3.7", "folium>=0.15", "mapclassify>=2.6"]
+shap = ["shap>=0.44"]
+network = ["networkx>=3.0"]
+libpysal = ["libpysal>=4.9"]
+bayes = ["pymc>=5.0", "arviz>=0.17"]
+all = [
+    "torch>=2.0",
+    "xgboost>=2.0",
+    "lightgbm>=4.0",
+    "matplotlib>=3.7",
+    "folium>=0.15",
+    "mapclassify>=2.6",
+    "shap>=0.44",
+    "networkx>=3.0",
+    "libpysal>=4.9",
+    "pymc>=5.0",
+    "arviz>=0.17",
+]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "matplotlib>=3.7",
+    "folium>=0.15",
+]
+
+[project.urls]
+Homepage = "https://github.com/zia207/PySpatialStats"
+Documentation = "https://github.com/zia207/PySpatialStats/blob/main/TUTORIAL.md"
+Repository = "https://github.com/zia207/PySpatialStats"
+Issues = "https://github.com/zia207/PySpatialStats/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["spatialstats*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::UserWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]

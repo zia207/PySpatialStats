@@ -1,0 +1,106 @@
+---
+title: "PySpatialStats"
+subtitle: "Spatial Statistics and Geographically Weighted Modeling in Python" 
+page-layout: full
+toc: false
+format:
+  html:
+    include-in-header:
+      text: |
+        <style>
+        .pkg-header-logo {
+          position: absolute;
+          top: 1.25rem;
+          left: 1.25rem;
+          width: 110px;
+          height: auto;
+          z-index: 100;
+        }
+        </style>
+---
+
+![](images/package_logo.png){.pkg-header-logo alt="PySpatialStats logo"}
+
+::: {.pkg-hero}
+
+# pyspatialstats {.pkg-name}
+
+**Latest release:** 0.2.0 · **Requires:** Python ≥ 3.9 · **License:** [BSD-3-Clause](https://github.com/zia207/PySpatialStats/blob/main/LICENSE)
+
+A unified Python framework for spatial statistics and geographically weighted modelling — from ESDA and spatial weights to GWR, MGWR, GW machine learning, and deep learning (GNNWR, GTNNWR).
+
+```{.bash copy="true"}
+pip install pyspatialstats
+```
+
+| | |
+|---|---|
+| **Package** | [GitHub](https://github.com/zia207/PySpatialStats) |
+| **Docs** | [Tutorial](../TUTORIAL.md) · [Example Notebook](../examples/notebooks/00_geographically_weighted_models_introductions.ipynb) |
+| **Author** | PySpatialStats Contributors |
+
+:::
+
+## What is it?
+
+**PySpatialStats** provides a comprehensive, extensible framework for geographically weighted modelling:
+
+- Classical **Geographically Weighted Statistics** (GWR, MGWR, GWSS, GWGLM)
+- **Geographically Weighted Machine Learning** (Random Forest, XGBoost, LightGBM)
+- **Geographically Weighted Deep Learning** (GNNWR, GTNNWR via PyTorch)
+- **Multivariate** methods (GWPCA)
+- **Network-distance** GWR
+- **Spatiotemporal** models (GTWR)
+
+## Quick Start
+
+```python
+from spatialstats.gwmodel.linear import GWR, MGWR
+from spatialstats.gwmodel.ensemble import GWRandomForest
+from spatialstats.gwmodel.deep import GNNWR
+from spatialstats.gwmodel.datasets import load_georgia
+
+gdf, features, target = load_georgia()
+coords = gdf[['x', 'y']].values
+X = gdf[features].values
+y = gdf[target].values
+
+# Geographically Weighted Regression
+gwr = GWR(bandwidth=2.0, fixed=True, kernel='bisquare')
+gwr.fit(X, y, coords)
+print(gwr.summary())
+```
+
+## Installation
+
+```bash
+pip install pyspatialstats                  # core only
+pip install pyspatialstats[deep]            # + PyTorch (GNNWR, GTNNWR)
+pip install pyspatialstats[boosting]        # + XGBoost, LightGBM
+pip install pyspatialstats[all]             # everything
+```
+
+## Model Catalogue
+
+| Module | Model | Description |
+|---|---|---|
+| `linear` | `GWR` | Geographically Weighted Regression |
+| `linear` | `MGWR` | Multiscale GWR |
+| `linear` | `GWGLM` | GW Generalised Linear Models |
+| `linear` | `GWSS` | GW Summary Statistics |
+| `spatiotemporal` | `GTWR` | Geographically & Temporally WR |
+| `ensemble` | `GWRandomForest` | GW Random Forest |
+| `ensemble` | `GWXGBoost` | GW XGBoost |
+| `ensemble` | `GWLightGBM` | GW LightGBM |
+| `deep` | `GNNWR` | Neural Network Weighted Regression |
+| `deep` | `GTNNWR` | Spatiotemporal Neural Network WR |
+| `multivariate` | `GWPCA` | GW Principal Component Analysis |
+| `network` | `NetworkGWR` | Network-distance GWR |
+
+## References
+
+- Fotheringham, Brunsdon & Charlton (2002). *Geographically Weighted Regression*. Wiley.
+- Oshan et al. (2019). mgwr. *ISPRS IJGI*, 8(6), 269.
+- Sun & Hu (2024). PyGRF. *Transactions in GIS*, 28(7), 2476-2491.
+- Du et al. (2020). GNNWR. *IJGIS*, 34(7), 1353-1377.
+- Wu et al. (2021). GTNNWR. *IJGIS*, 35(3), 582-608.

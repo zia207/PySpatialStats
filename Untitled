@@ -1,0 +1,13 @@
+## Part 10 — Capstone: End-to-End Workflow  🟡
+
+**Goal.** One coherent health-geography study using the whole package on `diabetes_atlantic`. **Notebook.** `ch10_capstone`.
+
+1. **Data and CRS** (Part 0): audit with `load_study_area`, reproject, map.
+2. **Weights** (Part 2): Queen + KNN sensitivity, island handling.
+3. **Autocorrelation** (Part 2): global and local; Moran scatterplot.
+4. **Clusters** (Part 4): Gi\* and LISA agreement; regionalisation.
+5. **Explanation** (Part 3): OLS → LM tests → SLM / SEM.
+6. **Heterogeneity** (Part 6): GWR / MGWR; local coefficient maps; diagnostics.
+7. **Rates and uncertainty** (Part 5): SMR → EB → BYM; probability maps.
+8. **Prediction** (Parts 6 and 7): GW ensemble or interpolation for new places; spatial CV.
+9. **Reporting:** a decision log (weights, α, correction, permutations, seeds), the reproducible notebook, a one-page summary figure. (Space–time step deferred until `spacetime` exists.)
