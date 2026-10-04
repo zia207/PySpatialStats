@@ -7796,6 +7796,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=80aa1001">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><img alt="Banner" src="../images/02_banner.png"/></p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=fbd9c803">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7828,23 +7839,42 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p>1.. <a href="#1.-Overview">Overview</a>
-2.. <a href="#2.-Python-Setup">Python Setup</a>
-3.. <a href="#3.-Sensitivity:-Weights-Definition">Sensitivity: Weights Definition</a>
-4.. <a href="#4.-Sensitivity:-Permutations,-Seed,-and-Transform">Sensitivity: Permutations, Seed, and Transform</a></p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><ol>
+<li><p><a href="#1.-Overview">Overview</a></p>
+</li>
+<li><p><a href="#2.-Python-Setup">Python Setup</a></p>
+</li>
+<li><p><a href="#3.-Sensitivity:-Weights-Definition">Sensitivity: Weights Definition</a></p>
+</li>
+<li><p><a href="#4.-Sensitivity:-Permutations,-Seed,-and-Transform">Sensitivity: Permutations, Seed, and Transform</a></p>
 <ul>
-<li>4.1 <a href="#4.1-Random-seed">Random seed</a></li>
-<li>4.2 <a href="#4.2-Row-standardised-vs.-binary-weights">Row-standardised vs. binary weights</a>
-5.. <a href="#5.-Pitfalls">Pitfalls</a>
-6.. <a href="#6.-Exercises">Exercises</a></li>
-<li>6.1 <a href="#6.1-Spatial-lag-by-hand-and-with-W.lag">Spatial lag by hand and with W.lag</a></li>
-<li>6.2 <a href="#6.2-Rank-six-weight-definitions-by-Moran%27s-I">Rank six weight definitions by Moran's I</a></li>
-<li>6.3 <a href="#6.3-Compare-LISA-clusters-for-Obesity-and-Dia_pct">Compare LISA clusters for Obesity and Dia_pct</a></li>
-<li>6.4 <a href="#6.4-Permutations-needed-before-FDR-flags-anything">Permutations needed before FDR flags anything</a></li>
-<li>6.5 <a href="#6.5-Reproduce-global-Moran%27s-I-with-libpysal/esda">Reproduce global Moran's I with libpysal/esda</a>
-7.. <a href="#7.-Summary-and-Conclusions">Summary and Conclusions</a>
-8.. <a href="#8.-Resources">Resources</a></li>
+<li><p>4.1 <a href="#4.1-Random-seed">Random seed</a></p>
+</li>
+<li><p>4.2 <a href="#4.2-Row-standardised-vs.-binary-weights">Row-standardised vs. binary weights</a></p>
+</li>
 </ul>
+</li>
+<li><p><a href="#5.-Pitfalls">Pitfalls</a></p>
+</li>
+<li><p><a href="#6.-Exercises">Exercises</a></p>
+<ul>
+<li><p>6.1 <a href="#6.1-Spatial-lag-by-hand-and-with-W.lag">Spatial lag by hand and with W.lag</a></p>
+</li>
+<li><p>6.2 <a href="#6.2-Rank-six-weight-definitions-by-Moran%27s-I">Rank six weight definitions by Moran's I</a></p>
+</li>
+<li><p>6.3 <a href="#6.3-Compare-LISA-clusters-for-Obesity-and-Dia_pct">Compare LISA clusters for Obesity and Dia_pct</a></p>
+</li>
+<li><p>6.4 <a href="#6.4-Permutations-needed-before-FDR-flags-anything">Permutations needed before FDR flags anything</a></p>
+</li>
+<li><p>6.5 <a href="#6.5-Reproduce-global-Moran%27s-I-with-libpysal/esda">Reproduce global Moran's I with libpysal/esda</a></p>
+</li>
+</ul>
+</li>
+<li><p><a href="#7.-Summary-and-Conclusions">Summary and Conclusions</a></p>
+</li>
+<li><p><a href="#8.-Resources">Resources</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -8662,7 +8692,7 @@ p_sim                     0.0010          0.0010
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>/home/zia207/Github/PySpatialStats/spatialstats/weights/w.py:225: UserWarning: The weights matrix is not fully connected: 
  There are 2 disconnected components.
  There is 1 island with id: 33.

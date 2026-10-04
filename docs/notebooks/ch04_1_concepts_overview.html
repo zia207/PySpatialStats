@@ -7796,6 +7796,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0b398d9e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><img alt="Banner" src="../images/04_banner.png"/></p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=96af94d0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7828,13 +7839,20 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p>1.. <a href="#1.-Overview">Overview</a>
-2.. <a href="#2.-Python-Setup">Python Setup</a>
-3.. <a href="#3.-Four-Questions,-Four-Families">Four Questions, Four Families</a>
-4.. <a href="#4.-A-First-Look-at-Each-Family-on-the-Same-Data">A First Look at Each Family on the Same Data</a>
-5.. <a href="#5.-How-Part-4-Connects-to-Parts-1-and-2">How Part 4 Connects to Parts 1 and 2</a>
-6.. <a href="#6.-Summary-and-Conclusions">Summary and Conclusions</a>
-7.. <a href="#7.-Resources">Resources</a></p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><ol>
+<li><p><a href="#1.-Overview">Overview</a></p>
+</li>
+<li><p><a href="#2.-Python-Setup">Python Setup</a></p>
+</li>
+<li><p><a href="#3.-Four-Questions,-Four-Families">Four Questions, Four Families</a></p>
+</li>
+<li><p><a href="#4.-A-First-Look-at-Each-Family-on-the-Same-Data">A First Look at Each Family on the Same Data</a></p>
+</li>
+<li><p><a href="#6.-Summary-and-Conclusions">Summary and Conclusions</a></p>
+</li>
+<li><p><a href="#7.-Resources">Resources</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -8008,7 +8026,7 @@ counties     : 217
 </table>
 <p>Each row is a genuinely different statistical object, answering a question the others cannot:</p>
 <ul>
-<li>A <strong>hot spot</strong> (Gi*) says a value and its neighbours are unusually high <em>together</em> — it says nothing about
+<li>A <strong>hot spot</strong> (Gi<em>) says a value and its neighbours are unusually high *together</em> — it says nothing about
 whether that excess is more than population size would predict, and nothing about point-level density.</li>
 <li>The <strong>scan statistic</strong> explicitly compares observed <em>cases</em> to <em>expected</em> cases given a population at risk —
 the tool for "is this rate too high", not just "is this value high".</li>
@@ -8154,8 +8172,8 @@ clustering revisits exactly the same crime data, but with a <em>constructive</em
 regions) rather than Part 1's <em>hypothesis-testing</em> goal (is the pattern different from CSR?).</li>
 <li><strong>Part 2 (spatial autocorrelation)</strong> introduced Local Moran's I (LISA) with a careful treatment of two
 competing permutation schemes and the FDR resolution-limit trap. Chapter 4.2 gives the companion Getis-Ord
-Gi*/Gi statistic the same full, calibrated treatment Part 2 gave LISA — including running Part 2's exact
-resolution-limit story again, this time for Gi*.</li>
+Gi<em>/Gi statistic the same full, calibrated treatment Part 2 gave LISA — including running Part 2's exact
+resolution-limit story again, this time for Gi</em>.</li>
 <li><strong>Part 3 (spatial regression)</strong> modelled <code>Dia_pct</code> as a function of covariates with one global relationship.
 Chapter 4.5's regionalisation offers a related but distinct idea: instead of modelling variation, <em>partition</em>
 the map into zones that are each internally homogeneous — useful preparation for the small-area stabilisation

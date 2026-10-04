@@ -7796,6 +7796,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=8fe633f5">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><img alt="Banner" src="../images/04_banner.png"/></p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9666418c">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7828,17 +7839,28 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p>1.. <a href="#1.-Overview">Overview</a>
-2.. <a href="#2.-Python-Setup">Python Setup</a></p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><ol>
+<li><p><a href="#1.-Overview">Overview</a></p>
+</li>
+<li><p><a href="#2.-Python-Setup">Python Setup</a></p>
 <ul>
-<li>2.1 <a href="#2.1-Gi*-vs.-Local-Moran-agreement">Gi* vs. Local Moran agreement</a></li>
-<li>2.2 <a href="#2.2-Scan-statistic-window-size-sensitivity">Scan-statistic window size sensitivity</a></li>
-<li>2.3 <a href="#2.3-The-permutation-count-where-Gi*-FDR-starts-flagging-counties">The permutation count where Gi* FDR starts flagging counties</a></li>
-<li>2.4 <a href="#2.4-Agglomerative-vs.-SKATER:-which-is-contiguous?">Agglomerative vs. SKATER: which is contiguous?</a></li>
-<li>2.5 <a href="#2.5-A-minimum-population-floor-for-SKATER,-and-the-island">A minimum-population floor for SKATER, and the island</a>
-3.. <a href="#3.-Summary-and-Conclusions">Summary and Conclusions</a>
-4.. <a href="#4.-Resources">Resources</a></li>
+<li><p>2.1 <a href="#2.1-Gi*-vs.-Local-Moran-agreement">Gi* vs. Local Moran agreement</a></p>
+</li>
+<li><p>2.2 <a href="#2.2-Scan-statistic-window-size-sensitivity">Scan-statistic window size sensitivity</a></p>
+</li>
+<li><p>2.3 <a href="#2.3-The-permutation-count-where-Gi*-FDR-starts-flagging-counties">The permutation count where Gi* FDR starts flagging counties</a></p>
+</li>
+<li><p>2.4 <a href="#2.4-Agglomerative-vs.-SKATER:-which-is-contiguous?">Agglomerative vs. SKATER: which is contiguous?</a></p>
+</li>
+<li><p>2.5 <a href="#2.5-A-minimum-population-floor-for-SKATER,-and-the-island">A minimum-population floor for SKATER, and the island</a></p>
+</li>
 </ul>
+</li>
+<li><p><a href="#3.-Summary-and-Conclusions">Summary and Conclusions</a></p>
+</li>
+<li><p><a href="#4.-Resources">Resources</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -8090,8 +8112,8 @@ hot/HH and cold/LL sides.*</p>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p><strong>Answer:</strong> Gi* hot vs. LISA HH: Jaccard 0.54; Gi* cold vs. LISA LL: Jaccard 0.27 (both reproduced from Chapter
 4.2). Neither pair is identical, and the cold/LL pair agrees noticeably less than the hot/HH pair — LISA's
-uncorrected significance screen (30 counties total) is simply more permissive than Gi*'s FDR-corrected one (10
-counties total), so LISA's LL set is the larger of the two and Gi*'s cold set is close to a subset of it rather
+uncorrected significance screen (30 counties total) is simply more permissive than Gi<em>'s FDR-corrected one (10
+counties total), so LISA's LL set is the larger of the two and Gi</em>'s cold set is close to a subset of it rather
 than a near-identical match.</p>
 <h3 id="2.2-Scan-statistic-window-size-sensitivity">2.2 Scan-statistic window size sensitivity<a class="anchor-link" href="#2.2-Scan-statistic-window-size-sensitivity">¶</a></h3><p><em>Re-run the scan with maximum window sizes of 10% and 50% of the population; what changes?</em></p>
 </div>

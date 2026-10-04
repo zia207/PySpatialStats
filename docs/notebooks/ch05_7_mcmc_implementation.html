@@ -7796,6 +7796,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=58e410e9">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><img alt="Banner" src="../images/05_banner.png"/></p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=ac8fa836">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7828,19 +7839,31 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p>1.. <a href="#1.-Overview">Overview</a>
-2.. <a href="#2.-Python-Setup">Python Setup</a>
-3.. <a href="#3.-The-Built-in-Sampler">The Built-in Sampler</a>
-4.. <a href="#4.-The-PyMC-Backend">The PyMC Backend</a></p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><ol>
+<li><p><a href="#1.-Overview">Overview</a></p>
+</li>
+<li><p><a href="#2.-Python-Setup">Python Setup</a></p>
+</li>
+<li><p><a href="#3.-The-Built-in-Sampler">The Built-in Sampler</a></p>
+</li>
+<li><p><a href="#4.-The-PyMC-Backend">The PyMC Backend</a></p>
 <ul>
-<li>4.1 <a href="#4.1-The-ICAR-scaling-gotcha">The ICAR scaling gotcha</a>
-5.. <a href="#5.-Diagnostics:-Why-the-Built-in-Sampler-Needs-Thinning">Diagnostics: Why the Built-in Sampler Needs Thinning</a>
-6.. <a href="#6.-Cross-backend-Validation">Cross-backend Validation</a>
-7.. <a href="#7.-Posterior-Predictive-Check">Posterior Predictive Check</a>
-8.. <a href="#8.-DIC,-and-Why-Not-WAIC/LOO-Here">DIC, and Why Not WAIC/LOO Here</a>
-9.. <a href="#9.-Summary-and-Conclusions">Summary and Conclusions</a>
-10.. <a href="#10.-Resources">Resources</a></li>
+<li>4.1 <a href="#4.1-The-ICAR-scaling-gotcha">The ICAR scaling gotcha</a></li>
 </ul>
+</li>
+<li><p><a href="#5.-Diagnostics:-Why-the-Built-in-Sampler-Needs-Thinning">Diagnostics: Why the Built-in Sampler Needs Thinning</a></p>
+</li>
+<li><p><a href="#6.-Cross-backend-Validation">Cross-backend Validation</a></p>
+</li>
+<li><p><a href="#7.-Posterior-Predictive-Check">Posterior Predictive Check</a></p>
+</li>
+<li><p><a href="#8.-DIC,-and-Why-Not-WAIC/LOO-Here">DIC, and Why Not WAIC/LOO Here</a></p>
+</li>
+<li><p><a href="#9.-Summary-and-Conclusions">Summary and Conclusions</a></p>
+</li>
+<li><p><a href="#10.-Resources">Resources</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -8080,14 +8103,14 @@ Gibbs updates for smooth spatial fields — but it <strong>requires a fully conn
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Initializing NUTS using jitter+adapt_diag...
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>/home/zia207/.pyenv/versions/3.11.16/lib/python3.11/site-packages/pytensor/link/c/cmodule.py:2986: UserWarning: PyTensor could not link to a BLAS installation. Operations that might benefit from BLAS will be severely degraded.
 This usually happens when PyTensor is installed via pip. We recommend it be installed via conda/mamba/pixi instead.
 Alternatively, you can use an experimental backend such as Numba or JAX that perform their own BLAS optimizations, by setting `pytensor.config.mode == 'NUMBA'` or passing `mode='NUMBA'` when compiling a PyTensor function.
@@ -8098,35 +8121,35 @@ For more options and details see https://pytensor.readthedocs.io/en/latest/troub
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Multiprocess sampling (4 chains in 4 jobs)
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>NUTS: [alpha, tau_u, u_std, tau_v, v]
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Sampling 4 chains for 1_000 tune and 1_000 draw iterations (4_000 + 4_000 draws total) took 6 seconds.
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The rhat statistic is larger than 1.01 for some parameters. This indicates problems during sampling. See https://arxiv.org/abs/1903.08008 for details
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>The effective sample size per chain is smaller than 100 for some parameters.  A higher number is needed for reliable rhat and ess computation. See https://arxiv.org/abs/1903.08008 for details
 </pre>
 </div>

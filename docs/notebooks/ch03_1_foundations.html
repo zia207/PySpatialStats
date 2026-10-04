@@ -7796,6 +7796,17 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=4892981f">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><img alt="Banner" src="../images/03_banner.png"/></p>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=b3767bca">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7828,14 +7839,24 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <hr/>
-<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><p>1.. <a href="#1.-Overview">Overview</a>
-2.. <a href="#2.-Python-Setup">Python Setup</a>
-3.. <a href="#3.-Why-OLS-Fails-on-Spatial-Data">Why OLS Fails on Spatial Data</a>
-4.. <a href="#4.-Two-Mechanisms:-Substantive-vs.-Nuisance-Dependence">Two Mechanisms: Substantive vs. Nuisance Dependence</a>
-5.. <a href="#5.-A-Taxonomy-of-Spatial-Regression-Models">A Taxonomy of Spatial Regression Models</a>
-6.. <a href="#6.-Data-Preparation">Data Preparation</a>
-7.. <a href="#7.-Summary-and-Conclusions">Summary and Conclusions</a>
-8.. <a href="#8.-Resources">Resources</a></p>
+<h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">¶</a></h2><ol>
+<li><p><a href="#1.-Overview">Overview</a></p>
+</li>
+<li><p><a href="#2.-Python-Setup">Python Setup</a></p>
+</li>
+<li><p><a href="#3.-Why-OLS-Fails-on-Spatial-Data">Why OLS Fails on Spatial Data</a></p>
+</li>
+<li><p><a href="#4.-Two-Mechanisms:-Substantive-vs.-Nuisance-Dependence">Two Mechanisms: Substantive vs. Nuisance Dependence</a></p>
+</li>
+<li><p><a href="#5.-A-Taxonomy-of-Spatial-Regression-Models">A Taxonomy of Spatial Regression Models</a></p>
+</li>
+<li><p><a href="#6.-Data-Preparation">Data Preparation</a></p>
+</li>
+<li><p><a href="#7.-Summary-and-Conclusions">Summary and Conclusions</a></p>
+</li>
+<li><p><a href="#8.-Resources">Resources</a></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -8046,6 +8067,22 @@ guessing from theory alone.</p>
 \text{OLS} \;\longrightarrow\; \text{SLX} \;\longrightarrow\; \text{SAR (SLM)} \;\longrightarrow\; \text{SEM}
 \;\longrightarrow\; \text{SARAR} \;\longrightarrow\; \text{SDM} \;\longrightarrow\; \text{SDEM}
 $$</p>
+<ul>
+<li><p><strong>OLS (Ordinary Least Squares)</strong>: The basic, familiar regression model. It assumes each area's outcome is independent of its neighbors, except for shared covariates. No special spatial effects are included. Use this as a baseline.</p>
+</li>
+<li><p><strong>SLX (Spatial Lag of X)</strong>: Like OLS, but also includes "neighbor averages" of each predictor as extra inputs. For example, it doesn't just use a county’s own obesity rate, but also its neighbors’ average obesity rate. Helps capture the effect of neighboring conditions.</p>
+</li>
+<li><p><strong>SAR / SLM (Spatial Lag Model)</strong>: Adds the outcome values of neighboring areas ("Wy") directly into the regression. Here, a change in one county can ripple through to others—outcomes actually influence each other, beyond the covariates.</p>
+</li>
+<li><p><strong>SEM (Spatial Error Model)</strong>: Instead of outcomes influencing each other, this model assumes that some unmeasured, spatially-patterned factor is affecting the residuals (“leftover errors”). Neighboring counties’ errors are correlated, but outcomes themselves don’t cause each other.</p>
+</li>
+<li><p><strong>SARAR</strong>: Combines SAR/SLM and SEM in one model, meaning both outcome spillovers and spatially-patterned residuals are present. Not implemented here.</p>
+</li>
+<li><p><strong>SDM (Spatial Durbin Model)</strong>: Combines SAR/SLM and SLX—outcomes and predictors can both spill over to neighbors. Good when both direct and indirect neighborhood effects may matter.</p>
+</li>
+<li><p><strong>SDEM</strong>: Combines SEM and SLX—neighboring effects come through the predictors and the residuals, but not the outcome itself.</p>
+</li>
+</ul>
 <table>
 <thead>
 <tr>
