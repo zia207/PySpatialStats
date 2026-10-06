@@ -18,7 +18,7 @@ pointpattern : Intensity, Ripley K/L/g, CSR envelopes
 regression   : OLS diagnostics, LM tests, spatial lag / error / Durbin models
 cluster      : Hot spots (Gi*, LISA), scan statistic, DBSCAN, regionalisation
 bayes        : Empirical Bayes and BYM disease mapping
-interpolate  : trend surfaces, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate splines, kriging, areal / dasymetric transfer
+interpolate  : trend surfaces, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate splines, kriging (ordinary, simple, universal, co-, regression, indicator) and E-type estimates, areal / dasymetric transfer
 sampling     : Random, stratified, GRTS, cLHS designs and estimators
 
 Planned modules
@@ -26,7 +26,7 @@ Planned modules
 spacetime
 """
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 __author__ = "PySpatialStats Contributors"
 __license__ = "BSD-3-Clause"
 

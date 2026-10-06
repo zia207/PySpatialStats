@@ -1,5 +1,5 @@
 <p align="left">
-  <img src="docs/images/package_logo.png" alt="PySpatialStats logo" width="110"/>
+  <img src="images/pyspatialstats_logo.png" alt="PySpatialStats logo" width="120"/>
 </p>
 
 # PySpatialStats
@@ -15,23 +15,29 @@ PySpatialStats provides a unified framework for:
 - **Spatial regression** — OLS diagnostics, Lagrange Multiplier tests, spatial lag / error / Durbin models, impacts
 - **Spatial clustering** — Gi\* hot spots, LISA clusters, Kulldorff scan statistic, DBSCAN, SKATER regionalisation
 - **Disease mapping** — SMRs, empirical Bayes smoothing, BYM (built-in MCMC sampler or PyMC)
-- **Interpolation** — polynomial trend surfaces, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate splines, variograms and ordinary kriging, areal / dasymetric transfer
+- **Interpolation** — polynomial trend surfaces, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate splines, variograms and kriging (ordinary, simple, universal, co-kriging, regression, indicator) with E-type estimates, areal / dasymetric transfer
 - **Spatial sampling** — random, systematic, stratified, two-stage, GRTS, cLHS designs and estimators
 - **Geographically Weighted Modeling** (`spatialstats.gwmodel`) — GWR, MGWR, GW ML, GNNWR/GTNNWR
 
 ## Installation
 
 ```bash
-pip install pyspatialstats                  # core
-pip install pyspatialstats[viz]             # + matplotlib / folium
-pip install pyspatialstats[deep]            # + PyTorch (GNNWR, GTNNWR)
-pip install pyspatialstats[boosting]        # + XGBoost, LightGBM
-pip install pyspatialstats[libpysal]        # + libpysal weight converters
-pip install pyspatialstats[bayes]           # + PyMC / ArviZ (optional NUTS backend for BYM)
-pip install pyspatialstats[all]             # everything
+pip install git+https://github.com/zia207/PySpatialStats.git
 ```
 
-Or install from source:
+Optional extras are installed from the same repository:
+
+```bash
+pip install "pyspatialstats[viz] @ git+https://github.com/zia207/PySpatialStats.git"        # + matplotlib / folium
+pip install "pyspatialstats[deep] @ git+https://github.com/zia207/PySpatialStats.git"       # + PyTorch (GNNWR, GTNNWR)
+pip install "pyspatialstats[boosting] @ git+https://github.com/zia207/PySpatialStats.git"   # + XGBoost, LightGBM
+pip install "pyspatialstats[libpysal] @ git+https://github.com/zia207/PySpatialStats.git"   # + libpysal weight converters
+pip install "pyspatialstats[bayes] @ git+https://github.com/zia207/PySpatialStats.git"      # + PyMC / ArviZ (optional NUTS backend for BYM)
+pip install "pyspatialstats[gam] @ git+https://github.com/zia207/PySpatialStats.git"        # + pyGAM (additive trends for regression kriging)
+pip install "pyspatialstats[all] @ git+https://github.com/zia207/PySpatialStats.git"        # everything
+```
+
+Or install from a local checkout:
 
 ```bash
 git clone https://github.com/zia207/PySpatialStats.git
@@ -132,7 +138,16 @@ p = pd.read_csv("data/CA_pm25_2025.csv")
 s = p.groupby("Site ID").agg(lat=("Lat", "mean"), lon=("Long", "mean"), pm=("Daily_PM2.5_ug_m3", "mean"))
 pts = gpd.GeoDataFrame(s, geometry=gpd.points_from_xy(s.lon, s.lat), crs=4326).to_crs(3310)
 xy = np.column_stack([pts.geometry.x, pts.geometry.y])
-compare_methods({"IDW": IDW(2), "kriging": OrdinaryKriging("auto")}, xy, pts["pm"].to_numpy())
+z = pts["pm"].to_numpy()
+compare_methods({"IDW": IDW(2), "kriging": OrdinaryKriging("auto")}, xy, z)
+
+from spatialstats.interpolate import UniversalKriging, IndicatorKriging
+
+UniversalKriging(variogram="auto", degree=1).fit(xy, z).predict(xy[:5], return_std=True)
+ik = IndicatorKriging(variogram="spherical").fit(xy, z)
+cuts = [float(v) for v in pts["pm"].quantile([0.25, 0.5, 0.75])]
+ik.predict(xy[:5], cuts)                                  # P(PM2.5 >= cutoff)
+ik.etype(xy[:5], cuts, z_min=0, z_max=float(z.max()))     # conditional mean
 
 # Sampling design, scored against a fully known population
 from spatialstats.sampling import simple_random, grts, compare_designs
@@ -143,8 +158,7 @@ compare_designs(y, {"SRS": lambda rng: simple_random(cxy, 100, rng),
                     "GRTS": lambda rng: grts(cxy, 100, seed=rng)}, n_reps=300, seed=1)
 ```
 
-See **[TUTORIAL.md](TUTORIAL.md)** for a full guide covering GW models, and
-**[TUTORIAL_SPATIAL_STATISTICS_OUTLINE.md](TUTORIAL_SPATIAL_STATISTICS_OUTLINE.md)** for the spatial-statistics tutorial plan.
+See **[Tutorials/](Tutorials/)** for the full notebook series (getting started through the capstone), and the rendered HTML site under **[docs/](docs/)**.
 
 ## Package layout
 
@@ -160,7 +174,7 @@ See **[TUTORIAL.md](TUTORIAL.md)** for a full guide covering GW models, and
 | `spatialstats.regression` | ready | OLS + diagnostics, LM tests, SLM / SEM / SDM / SLX by ML, impacts |
 | `spatialstats.cluster` | ready | Gi\*, LISA clusters, scan statistic, DBSCAN/HDBSCAN, SKATER, constrained clustering |
 | `spatialstats.bayes` | ready | SMR, empirical Bayes, BYM/ICAR (built-in sampler; PyMC optional, BYM2) |
-| `spatialstats.interpolate` | ready | Trend surface, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate spline, variograms, ordinary kriging, areal/dasymetric, CV |
+| `spatialstats.interpolate` | ready | Trend surface, Thiessen polygons, nearest neighbour, IDW, TIN, thin-plate spline, variograms, ordinary / simple / universal / co- / regression / indicator kriging, E-type estimates, areal/dasymetric, CV |
 | `spatialstats.sampling` | ready | SRS, systematic, stratified, two-stage, GRTS, space-filling, cLHS, estimators |
 | `spatialstats.spacetime` | planned | Stub package |
 

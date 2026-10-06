@@ -1,0 +1,49 @@
+# GitHub Pages — PySpatialStats
+# Settings → Pages → Deploy from a branch → main → /docs
+# Site URL: https://zia207.github.io/PySpatialStats/
+# The site in /docs is rendered by Quarto (docs/.nojekyll). This file is the
+# package metadata used if Jekyll is enabled from the repository root.
+
+title: PySpatialStats
+tagline: Spatial statistics and geographically weighted modeling in Python
+description: >-
+  A Python package for spatial weights, ESDA, point patterns, spatial
+  regression, clustering, disease mapping, interpolation, sampling, and
+  geographically weighted models.
+lang: en
+timezone: UTC
+
+url: https://zia207.github.io
+baseurl: /PySpatialStats
+
+author:
+  name: PySpatialStats Contributors
+  affiliation: Upatta Analytics
+
+version: 0.3.0
+python: ">= 3.9"
+license: BSD-3-Clause
+
+repository: zia207/PySpatialStats
+github: https://github.com/zia207/PySpatialStats
+issues: https://github.com/zia207/PySpatialStats/issues
+logo: images/pyspatialstats_logo.png
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  hard_wrap: false
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+exclude:
+  - .venv
+  - build
+  - dist
+  - tests
+  - Gemfile
+  - Gemfile.lock
+  - vendor

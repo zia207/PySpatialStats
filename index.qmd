@@ -1,0 +1,144 @@
+---
+title: "PySpatialStats"
+subtitle: "Spatial statistics and geographically weighted modeling in Python"
+page-layout: full
+toc: false
+---
+
+::: {.pkg-hero}
+
+# pyspatialstats {.pkg-name}
+
+**Latest release:** 0.3.0 · **Requires:** Python ≥ 3.9 · **License:** [BSD-3-Clause](https://github.com/zia207/PySpatialStats/blob/main/LICENSE)
+
+A unified Python framework for spatial statistics and geographically weighted modeling — weights and ESDA, point patterns, spatial regression, clustering, disease mapping, interpolation, sampling, and GWR.
+
+```{.bash copy="true"}
+pip install git+https://github.com/zia207/PySpatialStats.git
+```
+
+| | |
+|---|---|
+| **Package** | [GitHub](https://github.com/zia207/PySpatialStats) |
+| **Tutorials** | [Getting started](getting_started.html) · [Chapter 0](notebooks/ch00_1_installation_and_package_map.html) |
+| **Author** | PySpatialStats Contributors |
+
+:::
+
+## What is it?
+
+**PySpatialStats** (`spatialstats`) is a comprehensive package for spatial data analysis:
+
+- **Core** containers, CRS helpers, and distance utilities
+- **Spatial weights** (contiguity, distance, graph) with libpysal interoperability
+- **ESDA** — Moran's I, Geary's C, Getis-Ord G, LISA, join counts
+- **Point patterns** — intensity, Clark–Evans, G/F/J, Ripley's K/L, CSR envelopes
+- **Spatial regression** — OLS diagnostics, Lagrange Multiplier tests, lag, error, and Durbin models
+- **Clustering** — Gi\* hot spots, LISA clusters, scan statistics, DBSCAN, SKATER
+- **Disease mapping** — SMRs, empirical Bayes, and BYM (built-in sampler or PyMC)
+- **Interpolation** — IDW, trend surfaces, variograms, kriging, and areal transfer
+- **Sampling** — random, systematic, stratified, GRTS, and cLHS designs
+- **Geographically weighted models** — GWR, MGWR, GW machine learning, GNNWR, and GTNNWR
+
+## Quick start
+
+```python
+from spatialstats import Queen, Moran, GWR
+from spatialstats.datasets import load_lattice, load_georgia
+
+gdf, y_col = load_lattice(n=8)
+w = Queen(gdf)
+print(Moran(gdf[y_col], w, permutations=199).summary())
+
+georgia, features, target = load_georgia()
+gwr = GWR(bandwidth=2.0, fixed=True, kernel="bisquare")
+gwr.fit(georgia[features].values, georgia[target].values, georgia[["x", "y"]].values)
+print(gwr.summary())
+```
+
+## Installation
+
+```bash
+pip install git+https://github.com/zia207/PySpatialStats.git
+```
+
+Optional extras come from the same repository:
+
+```bash
+pip install "pyspatialstats[viz] @ git+https://github.com/zia207/PySpatialStats.git"        # + matplotlib / folium
+pip install "pyspatialstats[deep] @ git+https://github.com/zia207/PySpatialStats.git"       # + PyTorch (GNNWR, GTNNWR)
+pip install "pyspatialstats[boosting] @ git+https://github.com/zia207/PySpatialStats.git"   # + XGBoost, LightGBM
+pip install "pyspatialstats[libpysal] @ git+https://github.com/zia207/PySpatialStats.git"   # + libpysal weight converters
+pip install "pyspatialstats[bayes] @ git+https://github.com/zia207/PySpatialStats.git"      # + PyMC / ArviZ
+pip install "pyspatialstats[gam] @ git+https://github.com/zia207/PySpatialStats.git"        # + pyGAM
+pip install "pyspatialstats[all] @ git+https://github.com/zia207/PySpatialStats.git"        # everything
+```
+
+From a local checkout:
+
+```bash
+git clone https://github.com/zia207/PySpatialStats.git
+cd PySpatialStats
+pip install -e ".[all]"
+```
+
+## Package layout
+
+| Module | Description |
+|---|---|
+| `spatialstats.core` | SpatialData, SpatialResult, CRS, distance |
+| `spatialstats.weights` | Queen, Rook, KNN, kernel, and graph weights |
+| `spatialstats.esda` | Global and local autocorrelation, join counts |
+| `spatialstats.viz` | Choropleth, Moran scatter, LISA maps |
+| `spatialstats.pointpattern` | Intensity, Ripley's K/L, CSR envelopes |
+| `spatialstats.regression` | OLS, LM tests, SLM, SEM, SDM, impacts |
+| `spatialstats.cluster` | Gi\*, LISA clusters, scan statistic, SKATER |
+| `spatialstats.bayes` | SMR, empirical Bayes, BYM / ICAR |
+| `spatialstats.interpolate` | IDW, variograms, kriging, areal interpolation |
+| `spatialstats.sampling` | SRS, GRTS, cLHS, and design-based estimators |
+| `spatialstats.gwmodel` | GWR, MGWR, GWML, GNNWR, GTNNWR, GTWR |
+| `spatialstats.datasets` | Teaching datasets used in the tutorials |
+
+## Geographically weighted models
+
+| Module | Model | Description |
+|---|---|---|
+| `linear` | `GWR` | Geographically weighted regression |
+| `linear` | `MGWR` | Multiscale GWR |
+| `linear` | `GWGLM` | GW generalised linear models |
+| `linear` | `GWSS` | GW summary statistics |
+| `spatiotemporal` | `GTWR` | Geographically and temporally weighted regression |
+| `ensemble` | `GWRandomForest` | GW random forest |
+| `ensemble` | `GWXGBoost` | GW XGBoost |
+| `ensemble` | `GWLightGBM` | GW LightGBM |
+| `deep` | `GNNWR` | Neural-network weighted regression |
+| `deep` | `GTNNWR` | Spatiotemporal neural-network weighted regression |
+| `multivariate` | `GWPCA` | GW principal component analysis |
+| `network` | `NetworkGWR` | Network-distance GWR |
+
+## Tutorials
+
+The sidebar links a full course, from installation through a capstone. Start with [Getting Started](getting_started.html) or [Chapter 0.1](notebooks/ch00_1_installation_and_package_map.html).
+
+| Part | Topic |
+|---|---|
+| 0 | [Setup, data types, CRS](notebooks/ch00_1_installation_and_package_map.html) |
+| 1 | [Point patterns](notebooks/ch01_1_point_pattern_fundamentals.html) |
+| 2 | [Spatial autocorrelation](notebooks/ch02_1_concepts_and_foundations.html) |
+| 3 | [Spatial regression](notebooks/ch03_1_foundations.html) |
+| 4 | [Cluster analysis](notebooks/ch04_1_concepts_overview.html) |
+| 5 | [Disease mapping](notebooks/ch05_1_introduction_objectives.html) |
+| 6 | [Geographically weighted models](notebooks/ch06_1_introduction_motivation.html) |
+| 7 | [Interpolation](notebooks/ch07_1_introduction_concepts.html) |
+| 8 | [Sampling and design](notebooks/ch08_1_foundations.html) |
+| 9 | [Spatio-temporal analysis](notebooks/ch09_1_concepts_data.html) |
+| 10 | [Capstone](notebooks/ch10_capstone.html) |
+
+## References
+
+- Anselin, L. (1995). Local indicators of spatial association — LISA. *Geographical Analysis*, 27(2), 93–115.
+- Besag, J., York, J., & Mollié, A. (1991). Bayesian image restoration, with two applications in spatial statistics. *Annals of the Institute of Statistical Mathematics*, 43, 1–20.
+- Fotheringham, A. S., Brunsdon, C., & Charlton, M. (2002). *Geographically Weighted Regression*. Wiley.
+- Oshan, T. M. et al. (2019). mgwr: A Python implementation of multiscale geographically weighted regression. *ISPRS IJGI*, 8(6), 269.
+- Du, Z. et al. (2020). Geographically neural network weighted regression. *IJGIS*, 34(7), 1353–1377.
+- Wu, S. et al. (2021). Geographically and temporally neural network weighted regression. *IJGIS*, 35(3), 582–608.

@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyspatialstats"
-version = "0.2.0"
+version = "0.3.0"
 description = "A comprehensive Python package for spatial statistics and geographically weighted modeling"
 readme = "README.md"
 requires-python = ">=3.9"
-license = { text = "BSD-3-Clause" }
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 authors = [
     { name = "PySpatialStats Contributors" },
 ]
@@ -26,13 +27,14 @@ keywords = [
     "point-pattern-analysis",
     "spatial-regression",
     "kriging",
+    "geostatistics",
+    "cokriging",
     "disease-mapping",
     "spatial-sampling",
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
@@ -58,6 +60,7 @@ shap = ["shap>=0.44"]
 network = ["networkx>=3.0"]
 libpysal = ["libpysal>=4.9"]
 bayes = ["pymc>=5.0", "arviz>=0.17"]
+gam = ["pygam>=0.9"]
 all = [
     "torch>=2.0",
     "xgboost>=2.0",
@@ -70,6 +73,7 @@ all = [
     "libpysal>=4.9",
     "pymc>=5.0",
     "arviz>=0.17",
+    "pygam>=0.9",
 ]
 dev = [
     "pytest>=7.0",
@@ -82,7 +86,7 @@ dev = [
 
 [project.urls]
 Homepage = "https://github.com/zia207/PySpatialStats"
-Documentation = "https://github.com/zia207/PySpatialStats/blob/main/TUTORIAL.md"
+Documentation = "https://zia207.github.io/PySpatialStats/"
 Repository = "https://github.com/zia207/PySpatialStats"
 Issues = "https://github.com/zia207/PySpatialStats/issues"
 

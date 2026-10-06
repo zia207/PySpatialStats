@@ -847,6 +847,168 @@ def test_kriging_properties():
     assert ex.variogram_.model == "exponential"
 
 
+def test_simple_universal_cokriging_and_regression():
+    from spatialstats.interpolate import (
+        OrdinaryKriging, SimpleKriging, UniversalKriging, VariogramModel, CrossVariogramModel,
+        Cokriging, MultivariateCokriging, ColocatedCokriging, RegressionKriging,
+        empirical_cross_variogram, fit_cross_variogram, fit_lmc, check_lmc_validity,
+        enforce_quantile_monotonicity, cross_validate,
+    )
+    rng = np.random.default_rng(2)
+    xy, z = _field(60, seed=1)
+    q = rng.uniform(0, 100, (20, 2))
+    vg = VariogramModel("spherical", nugget=0.05, psill=1.0, range=40.0)
+    vg2 = VariogramModel("spherical", nugget=0.05, psill=1.2, range=40.0)
+
+    # simple kriging is exact, reverts to the known mean past the range, and
+    # agrees with the global solution when every neighbour is used
+    sk = SimpleKriging(vg, mean=5.0).fit(xy, z)
+    m, sd = sk.predict(xy, return_std=True)
+    assert np.allclose(m, z, atol=1e-8) and np.allclose(sd, 0, atol=1e-5)
+    far, far_sd = sk.predict(np.array([[500.0, 500.0]]), return_std=True)
+    assert np.isclose(far[0], 5.0, atol=1e-6) and np.isclose(far_sd[0], np.sqrt(vg.sill), atol=1e-6)
+    assert np.allclose(sk.predict(q), SimpleKriging(vg, mean=5.0, n_neighbors=len(xy)).fit(xy, z).predict(q))
+    local = SimpleKriging(vg, mean=5.0, n_neighbors=12).fit(xy, z).predict(q)
+    assert np.isfinite(local).all() and np.abs(local - sk.predict(q)).max() < 1.0
+    assert np.isclose(SimpleKriging(vg).fit(xy, z).mean_, z.mean())
+    assert sk.clone().mean == 5.0
+    g, gv, gs = sk.predict_grid((0, 0, 100, 100), n_cells=8, return_std=True)
+    assert len(gv) == len(gs) == len(g.coords)
+
+    # degree 0 is ordinary kriging; a polynomial drift is reproduced everywhere
+    uk0 = UniversalKriging(vg, degree=0).fit(xy, z)
+    ok = OrdinaryKriging(vg).fit(xy, z)
+    mu, su = uk0.predict(q, return_std=True)
+    mo, so = ok.predict(q, return_std=True)
+    assert np.allclose(mu, mo, atol=1e-6) and np.allclose(su, so, atol=1e-6)
+    plane_xy = rng.uniform(0, 100, (40, 2))
+    plane = 1.0 + 2.0 * plane_xy[:, 0] - 0.5 * plane_xy[:, 1]
+    uk = UniversalKriging(vg, degree=1).fit(plane_xy, plane)
+    far_xy = np.array([[-50.0, 200.0], [10.0, 10.0]])
+    assert np.allclose(uk.predict(plane_xy), plane, atol=1e-6)
+    assert np.allclose(uk.predict(far_xy), 1.0 + 2.0 * far_xy[:, 0] - 0.5 * far_xy[:, 1], atol=1e-5)
+    assert np.allclose(uk.predict(far_xy),
+                       UniversalKriging(vg, degree=1, n_neighbors=len(plane_xy)).fit(plane_xy, plane).predict(far_xy))
+    cv = cross_validate(SimpleKriging(vg, mean=float(z.mean())), xy, z, method="kfold", k=4, seed=0)
+    assert np.isfinite(cv.rmse)
+
+    # zero cross-covariance drops the secondary and matches ordinary kriging
+    xy2 = xy + np.array([1.0, -1.0])
+    z2 = 0.5 * z + 0.1
+    cv0 = CrossVariogramModel("spherical", nugget=0.0, psill=0.0, range=40.0)
+    ck0 = Cokriging(vg, vg2, cv0).fit(xy, z, xy2, z2)
+    ckm, cks = ck0.predict(q, return_std=True)
+    assert np.allclose(ckm, mo, atol=1e-6) and np.allclose(cks, so, atol=1e-5)
+    linked = CrossVariogramModel("spherical", nugget=0.0, psill=0.4, range=40.0)
+    ck = Cokriging(vg, vg2, linked).fit(xy, z, xy2, z2)
+    assert np.allclose(ck.predict(xy), z, atol=1e-6)
+    cksd = ck.predict(xy, return_std=True)[1]
+    assert np.allclose(cksd, 0, atol=1e-5)
+    mv = MultivariateCokriging([vg, vg2], {(0, 1): cv0}).fit([xy, xy2], [z, z2])
+    assert np.allclose(mv.predict(q), mo, atol=1e-6)
+    assert np.allclose(MultivariateCokriging([vg, vg2], {(1, 0): linked}).fit([xy, xy2], [z, z2]).predict(xy),
+                       z, atol=1e-6)
+
+    # colocated cokriging with no cross-correlation is ordinary kriging;
+    # a strong positive cross-correlation moves the prediction
+    colo0 = ColocatedCokriging(vg, [vg2], [cv0]).fit(xy, z, secondary_means=[0.0])
+    sec = np.zeros((len(q), 1))
+    assert np.allclose(colo0.predict(q, sec), mo, atol=1e-6)
+    colo = ColocatedCokriging(vg, [vg], [CrossVariogramModel("spherical", 0.0, 0.8, 40.0)]).fit(
+        xy, z, secondary_means=[float(z.mean())],
+    )
+    high = np.full(len(q), float(z.mean()) + 3.0)
+    assert colo.predict(q, high).mean() > mo.mean()
+
+    emp = empirical_cross_variogram(xy, z, z2, n_lags=8)
+    assert {"lag", "gamma", "n_pairs"} <= set(emp.columns) and len(emp) >= 3
+    fitted = fit_cross_variogram(emp, "spherical", cov0=float(np.cov(z, z2)[0, 1]))
+    assert fitted.range > 0 and np.isfinite(fitted.psill)
+    vgs, cross, info = fit_lmc(xy, [z, z2], names=["a", "b"], n_lags=8)
+    assert info["lmc_check"]["valid"] and (0, 1) in cross
+    assert np.allclose(np.diag(info["sill_matrix"]), [v.psill for v in vgs])
+    assert check_lmc_validity([[1.0, 0.2], [0.2, 1.0]])["valid"]
+    assert not check_lmc_validity([[1.0, 2.0], [2.0, 1.0]])["valid"]
+    lmc = Cokriging(vgs[0], vgs[1], cross[(0, 1)]).fit(xy, z, xy, z2)
+    assert np.allclose(lmc.predict(xy), z, atol=1e-5)
+
+    # regression kriging recovers a pure regression and is exact at the samples
+    xfeat = rng.normal(size=(len(xy), 1))
+    y = 1.5 + 2.0 * xfeat[:, 0]
+    rk = RegressionKriging(variogram=vg).fit(xfeat, y, xy)
+    xnew = np.array([[0.0], [1.0], [-2.0]])
+    assert np.allclose(rk.predict(xnew, q[:3]), 1.5 + 2.0 * xnew[:, 0], atol=1e-6)
+    pred, std = rk.predict(xfeat, xy, return_std=True)
+    assert np.allclose(pred, y, atol=1e-6) and np.allclose(std, 0, atol=1e-5)
+    spatial = np.sin(xy[:, 0] / 15.0)
+    rk2 = RegressionKriging(regressor="linear", variogram="spherical", n_lags=8).fit(
+        xfeat, 2.0 * xfeat[:, 0] + spatial, xy,
+    )
+    assert rk2.variogram_.model == "spherical" and rk2.residuals_.shape == (len(xy),)
+    try:
+        _ = rk.feature_importances_
+        raise AssertionError("expected AttributeError")
+    except AttributeError:
+        pass
+    try:
+        RegressionKriging(regressor="not-a-model")
+        raise AssertionError("expected ValueError")
+    except ValueError:
+        pass
+    fixed = enforce_quantile_monotonicity({0.9: np.array([1.0, 3.0]), 0.1: np.array([2.0, 0.0])})
+    assert np.allclose(fixed[0.1], [1.0, 0.0]) and np.allclose(fixed[0.9], [2.0, 3.0])
+
+
+def test_indicator_kriging_and_etype():
+    from spatialstats.interpolate import (
+        IndicatorKriging, VariogramModel, empirical_variogram, empirical_indicator_variogram,
+        fit_indicator_variogram, indicator_transform, etype_estimate,
+    )
+    xy, z = _field(50, seed=4)
+    q = np.random.default_rng(1).uniform(0, 100, (12, 2))
+    t = float(np.median(z))
+    ind = indicator_transform(z, t)
+    emp = empirical_indicator_variogram(xy, z, t, n_lags=8)
+    direct = empirical_variogram(xy, ind, n_lags=8)
+    assert np.allclose(emp["gamma"], direct["gamma"]) and np.all((emp["gamma"] >= 0) & (emp["gamma"] <= 0.5))
+    # I(Z >= t) and I(Z <= t) share a variogram
+    flipped = empirical_indicator_variogram(xy, z, t, n_lags=8, greater_equal=False)
+    assert np.allclose(emp["gamma"], flipped["gamma"])
+    vg, _ = fit_indicator_variogram(xy, z, t, model="spherical", n_lags=8)
+    assert vg.model == "spherical" and vg.sill > 0 and vg.range > 0
+
+    given = VariogramModel("spherical", nugget=0.01, psill=0.2, range=40.0)
+    ik = IndicatorKriging(variogram=given, n_neighbors=12, regularization=0.0).fit(xy, z)
+    at_data = ik.predict(xy, t)[t]
+    assert np.allclose(at_data, ind, atol=1e-5)                                  # reproduces the indicator
+    prob = ik.predict(q, [t, t + 1.0])
+    assert prob[t].shape == (len(q),) and np.all((prob[t] >= 0) & (prob[t] <= 1))
+    below = float(z.min() - 1.0)
+    assert np.allclose(ik.predict(q, below)[below], 1.0)                         # every sample exceeds it
+    wide = IndicatorKriging(variogram=given, n_neighbors=8, search_radius=1e9, regularization=0.0)
+    local = IndicatorKriging(variogram=given, n_neighbors=8, regularization=0.0)
+    assert np.allclose(wide.fit(xy, z).predict(q, t)[t], local.fit(xy, z).predict(q, t)[t], atol=1e-6)
+    auto = IndicatorKriging(variogram="auto", n_lags=8).fit(xy, z)
+    assert auto.predict(q, t)[t].shape == (len(q),) and t in auto.variograms_
+
+    # Uniform(0, 1) survival integrates to the mean, 1/2
+    cuts = np.array([0.25, 0.5, 0.75])
+    surv = [np.array([0.75]), np.array([0.5]), np.array([0.25])]
+    assert np.isclose(etype_estimate(cuts, surv, z_min=0.0, z_max=1.0)[0], 0.5)
+    est = ik.etype(q, np.quantile(z, [0.3, 0.5, 0.7]), z_min=float(z.min()), z_max=float(z.max()))
+    assert est.shape == (len(q),) and np.isfinite(est).all()
+    try:
+        etype_estimate([2.0, 1.0], [np.array([0.2]), np.array([0.8])])
+        raise AssertionError("expected ValueError")
+    except ValueError:
+        pass
+    try:
+        empirical_indicator_variogram(xy, z, z.max() + 10.0)
+        raise AssertionError("expected ValueError")
+    except ValueError:
+        pass
+
+
 def test_pykrige_crosscheck():
     need("pykrige")
     from pykrige.ok import OrdinaryKriging as PK
@@ -953,7 +1115,9 @@ def test_packages_expose_public_api():
         "cluster": ["getis_ord_gi", "spatial_scan", "skater", "dbscan_clusters"],
         "bayes": ["BYM", "eb_gamma_poisson", "eb_local", "smr"],
         "sampling": ["grts", "stratified", "estimate_mean", "clhs"],
-        "interpolate": ["IDW", "OrdinaryKriging", "areal_weighting", "cross_validate"],
+        "interpolate": ["IDW", "OrdinaryKriging", "SimpleKriging", "UniversalKriging",
+                        "Cokriging", "RegressionKriging", "IndicatorKriging", "etype_estimate",
+                        "areal_weighting", "cross_validate"],
     }.items():
         m = getattr(ss, mod)
         assert m.__all__, mod

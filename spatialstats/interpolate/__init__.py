@@ -3,8 +3,9 @@ spatialstats.interpolate
 ========================
 Spatial interpolation: deterministic surfaces (polynomial trend, Thiessen
 polygons, nearest neighbour, IDW, TIN, thin-plate splines), geostatistical
-prediction (variogram modelling, ordinary kriging with prediction variance),
-areal / dasymetric transfer between zone systems, and cross-validation.
+prediction (variogram modelling; ordinary, simple, universal, co-,
+regression and indicator kriging, with E-type estimates), areal / dasymetric transfer
+between zone systems, and cross-validation.
 
 Every interpolator shares one interface::
 
@@ -22,7 +23,13 @@ from spatialstats.interpolate.deterministic import (
     ThinPlateSpline,
 )
 from spatialstats.interpolate.kriging import (
-    VariogramModel, empirical_variogram, fit_variogram, fit_variogram_auto, OrdinaryKriging,
+    VariogramModel, empirical_variogram, fit_variogram, fit_variogram_auto,
+    OrdinaryKriging, SimpleKriging, UniversalKriging,
+    CrossVariogramModel, empirical_cross_variogram, fit_cross_variogram, fit_lmc,
+    check_lmc_validity, Cokriging, MultivariateCokriging, ColocatedCokriging,
+    RegressionKriging, GAMRegressor, enforce_quantile_monotonicity, AVAILABLE_REGRESSORS,
+    indicator_transform, empirical_indicator_variogram, fit_indicator_variogram,
+    IndicatorKriging, etype_estimate,
 )
 from spatialstats.interpolate.areal import areal_weighting, dasymetric
 from spatialstats.interpolate.validate import CVResult, cross_validate, grid_search, compare_methods
@@ -31,7 +38,13 @@ __all__ = [
     "Interpolator", "Grid", "make_grid", "as_xy",
     "NearestNeighbor", "IDW", "TIN", "RBF", "Spline",
     "TrendSurface", "Thiessen", "thiessen_polygons", "ThinPlateSpline",
-    "VariogramModel", "empirical_variogram", "fit_variogram", "fit_variogram_auto", "OrdinaryKriging",
+    "VariogramModel", "empirical_variogram", "fit_variogram", "fit_variogram_auto",
+    "OrdinaryKriging", "SimpleKriging", "UniversalKriging",
+    "CrossVariogramModel", "empirical_cross_variogram", "fit_cross_variogram", "fit_lmc",
+    "check_lmc_validity", "Cokriging", "MultivariateCokriging", "ColocatedCokriging",
+    "RegressionKriging", "GAMRegressor", "enforce_quantile_monotonicity", "AVAILABLE_REGRESSORS",
+    "indicator_transform", "empirical_indicator_variogram", "fit_indicator_variogram",
+    "IndicatorKriging", "etype_estimate",
     "areal_weighting", "dasymetric",
     "CVResult", "cross_validate", "grid_search", "compare_methods",
 ]

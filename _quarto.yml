@@ -1,0 +1,263 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+
+website:
+  title: "PySpatialStats"
+  description: "Spatial statistics and geographically weighted modeling in Python"
+  site-url: https://zia207.github.io/PySpatialStats/
+  repo-url: https://github.com/zia207/PySpatialStats
+  repo-branch: main
+  page-navigation: true
+  back-to-top-navigation: true
+  search:
+    location: sidebar
+    type: textbox
+  page-footer:
+    right: "This page is built with [Quarto](https://quarto.org/)."
+    left: "&copy; PySpatialStats Contributors, 2026"
+  navbar:
+    background: primary
+    left:
+      - text: Home
+        href: index.qmd
+      - text: Getting Started
+        href: getting_started.html
+      - text: Tutorials
+        href: notebooks/ch00_1_installation_and_package_map.html
+    right:
+      - icon: github
+        href: https://github.com/zia207/PySpatialStats/
+        aria-label: GitHub
+      - icon: linkedin
+        href: https://www.linkedin.com/in/zia-ahmed207
+        aria-label: LinkedIn
+      - icon: envelope
+        href: mailto:zia207@gmail.com
+        aria-label: Email
+      - icon: globe
+        href: https://zia207.github.io/
+        aria-label: Website
+
+  sidebar:
+    logo: "images/pyspatialstats_logo.png"
+    pinned: true
+    border: true
+    align: center
+    search: true
+    style: "docked"
+    collapse-level: 1
+    contents:
+      - text: "Package Overview"
+        href: index.qmd
+      - text: "Getting Started"
+        href: getting_started.html
+      - section: "**Setup**"
+        contents:
+          - text: "0.1 Installation and Package Map"
+            href: notebooks/ch00_1_installation_and_package_map.html
+          - text: "0.2 Spatial Data Types"
+            href: notebooks/ch00_2_spatial_data_types_and_containers.html
+          - text: "0.3 CRS and Distances"
+            href: notebooks/ch00_3_crs_and_distances.html
+          - text: "0.4 Datasets, Maps and Workflow"
+            href: notebooks/ch00_4_datasets_maps_and_workflow.html
+      - section: "**1 · Point Patterns**"
+        contents:
+          - text: "1.1 Fundamentals"
+            href: notebooks/ch01_1_point_pattern_fundamentals.html
+          - text: "1.2 Spatial Intensity"
+            href: notebooks/ch01_2_spatial_intensity.html
+          - text: "1.3 Second-Order Functions"
+            href: notebooks/ch01_3_second_order_functions.html
+          - text: "1.4 Hypothesis Testing"
+            href: notebooks/ch01_4_hypothesis_testing.html
+          - text: "1.5 Areal Integration"
+            href: notebooks/ch01_5_areal_integration_pitfalls.html
+      - section: "**2 · Spatial Autocorrelation**"
+        contents:
+          - text: "2.1 Concepts and Foundations"
+            href: notebooks/ch02_1_concepts_and_foundations.html
+          - text: "2.2 Spatial Weights"
+            href: notebooks/ch02_2_spatial_weights.html
+          - text: "2.3 Visualisation"
+            href: notebooks/ch02_3_visualization_exploratory.html
+          - text: "2.4 Global Autocorrelation"
+            href: notebooks/ch02_4_global_autocorrelation.html
+          - text: "2.5 Local Autocorrelation (LISA)"
+            href: notebooks/ch02_5_local_autocorrelation_lisa.html
+          - text: "2.6 Sensitivity and Exercises"
+            href: notebooks/ch02_6_sensitivity_pitfalls_exercises.html
+      - section: "**3 · Spatial Regression**"
+        contents:
+          - text: "3.1 Foundations"
+            href: notebooks/ch03_1_foundations.html
+          - text: "3.2 OLS Baseline and Diagnostics"
+            href: notebooks/ch03_2_ols_baseline_diagnostics.html
+          - text: "3.3 Model Selection"
+            href: notebooks/ch03_3_model_selection.html
+          - text: "3.4 Model Families"
+            href: notebooks/ch03_4_model_families.html
+          - text: "3.5 Comparison and Reporting"
+            href: notebooks/ch03_5_comparison_reporting.html
+          - text: "3.6 Limits and Connections"
+            href: notebooks/ch03_6_limits_connections.html
+          - text: "3.7 Exercises"
+            href: notebooks/ch03_7_exercises.html
+      - section: "**4 · Spatial Cluster Analysis**"
+        contents:
+          - text: "4.1 Concepts"
+            href: notebooks/ch04_1_concepts_overview.html
+          - text: "4.2 Hotspot Detection"
+            href: notebooks/ch04_2_hotspot_detection.html
+          - text: "4.3 Density Clustering"
+            href: notebooks/ch04_3_density_clustering.html
+          - text: "4.4 Scan Statistic"
+            href: notebooks/ch04_4_scan_statistic.html
+          - text: "4.5 Regionalisation"
+            href: notebooks/ch04_5_regionalisation.html
+          - text: "4.6 Comparing and Validating"
+            href: notebooks/ch04_6_comparing_validating.html
+          - text: "4.7 Bridges"
+            href: notebooks/ch04_7_bridges.html
+          - text: "4.8 Exercises"
+            href: notebooks/ch04_8_exercises.html
+      - section: "**5 · Disease Mapping**"
+        contents:
+          - text: "5.1 Introduction"
+            href: notebooks/ch05_1_introduction_objectives.html
+          - text: "5.2 The Small-Area Problem"
+            href: notebooks/ch05_2_small_area_problem.html
+          - text: "5.3 Data Preparation"
+            href: notebooks/ch05_3_data_preparation.html
+          - text: "5.4 Raw Estimates"
+            href: notebooks/ch05_4_raw_estimates.html
+          - text: "5.5 Empirical Bayes"
+            href: notebooks/ch05_5_empirical_bayes.html
+          - text: "5.6 BYM Models"
+            href: notebooks/ch05_6_bym_models.html
+          - text: "5.7 MCMC Implementation"
+            href: notebooks/ch05_7_mcmc_implementation.html
+          - text: "5.8 Comparing and Evaluating"
+            href: notebooks/ch05_8_comparing_evaluating.html
+          - text: "5.9 Shrinkage Assessment"
+            href: notebooks/ch05_9_shrinkage_assessment.html
+          - text: "5.10 Reporting and Ethics"
+            href: notebooks/ch05_10_reporting_ethics.html
+          - text: "5.11 Handoffs and Exercises"
+            href: notebooks/ch05_11_handoffs_exercises.html
+      - section: "**6 · Geographically Weighted Models**"
+        contents:
+          - text: "6.1 Introduction"
+            href: notebooks/ch06_1_introduction_motivation.html
+          - text: "6.2 Data"
+            href: notebooks/ch06_2_data.html
+          - text: "6.3 Kernels and Bandwidth"
+            href: notebooks/ch06_3_kernels_bandwidth.html
+          - text: "6.4 GW Summary Statistics"
+            href: notebooks/ch06_4_gwss_exploratory.html
+          - text: "6.5 GWR Inference"
+            href: notebooks/ch06_5_gwr_inference.html
+          - text: "6.6 Advanced Variants"
+            href: notebooks/ch06_6_advanced_variants.html
+          - text: "6.7 Diagnostics"
+            href: notebooks/ch06_7_diagnostics.html
+          - text: "6.8 Comparing Models"
+            href: notebooks/ch06_8_comparing_models.html
+          - text: "6.9 Machine-Learning Ensembles"
+            href: notebooks/ch06_9_ml_ensemble_models.html
+          - text: "6.10 Spatiotemporal and Multivariate"
+            href: notebooks/ch06_10_spatiotemporal_multivariate.html
+          - text: "6.11 Deep Network Models"
+            href: notebooks/ch06_11_deep_network_models.html
+          - text: "6.12 Performance and Scaling"
+            href: notebooks/ch06_12_performance_scaling.html
+          - text: "6.13 Model Selection"
+            href: notebooks/ch06_13_model_selection_troubleshooting.html
+          - text: "6.14 Exercises"
+            href: notebooks/ch06_14_exercises.html
+      - section: "**7 · Spatial Interpolation**"
+        contents:
+          - text: "7.1 Concepts"
+            href: notebooks/ch07_1_introduction_concepts.html
+          - text: "7.2 Data Preparation"
+            href: notebooks/ch07_2_data_preparation.html
+          - text: "7.3 Deterministic Interpolation"
+            href: notebooks/ch07_3_deterministic_interpolation.html
+          - text: "7.4 Geostatistical Interpolation"
+            href: notebooks/ch07_4_geostatistical_interpolation.html
+          - text: "7.5 Model Validation"
+            href: notebooks/ch07_5_model_validation.html
+          - text: "7.6 Covariate-Assisted Interpolation"
+            href: notebooks/ch07_6_covariate_assisted_interpolation.html
+          - text: "7.7 Areal Interpolation"
+            href: notebooks/ch07_7_areal_interpolation.html
+          - text: "7.8 Exercises"
+            href: notebooks/ch07_8_exercises.html
+      - section: "**8 · Spatial Sampling**"
+        contents:
+          - text: "8.1 Foundations"
+            href: notebooks/ch08_1_foundations.html
+          - text: "8.2 Sampling Designs"
+            href: notebooks/ch08_2_sampling_designs.html
+          - text: "8.3 Estimation and Variance"
+            href: notebooks/ch08_3_estimation_variance.html
+          - text: "8.4 Monitoring Network Design"
+            href: notebooks/ch08_4_monitoring_network_design.html
+          - text: "8.5 Exercises"
+            href: notebooks/ch08_5_exercises.html
+      - section: "**9 · Spatio-Temporal Analysis**"
+        contents:
+          - text: "9.1 Concepts and Data"
+            href: notebooks/ch09_1_concepts_data.html
+          - text: "9.2 Space-Time Weights"
+            href: notebooks/ch09_2_spacetime_weights_global.html
+          - text: "9.3 Local and Emerging Hotspots"
+            href: notebooks/ch09_3_local_emerging_hotspots.html
+          - text: "9.4 Point Patterns and Density"
+            href: notebooks/ch09_4_spacetime_point_patterns_density.html
+          - text: "9.5 Space-Time Interpolation"
+            href: notebooks/ch09_5_spacetime_interpolation.html
+          - text: "9.6 Regression for Space-Time Data"
+            href: notebooks/ch09_6_regression_spacetime_data.html
+      - section: "**10 · Capstone**"
+        contents:
+          - text: "End-to-End Workflow"
+            href: notebooks/ch10_capstone.html
+
+tbl-cap-location: top
+title-block-banner: true
+
+execute:
+  enabled: false
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    highlight-style: github
+    fontsize: 1.1em
+    linestretch: 1.6
+    code-fold: show
+    code-tools: false
+    code-copy: true
+    code-link: true
+    smooth-scroll: true
+    toc: true
+    toc-depth: 4
+    toc-title: "On This Page"
+    number-sections: false
+    fig-align: center
+    df-print: paged
+    grid:
+      sidebar-width: 350px
+      body-width: 1200px
+      margin-width: 250px
+      gutter-width: 1.5rem
